@@ -6,10 +6,13 @@ isPresent=1
 isPartTime=1
 isFullTime=2
 empRatePerHr=20
-randomCheck=$((RANDOM%3))
+numWorkingDays=20
+totolSalary=0
+
+employeeCheck=$((RANDOM%3))
 
 #To check whether the employee is present or absent 
-if [ $isPresent -eq $randomCheck ]
+if [ $isPresent -eq $employeeCheck ]
 then
 	echo "Employee is Present"
 else
@@ -17,9 +20,8 @@ else
 fi
 
 #To calculate daily employee wage
-if [ $isPresent -eq $randomCheck ]
+if [ $isPresent -eq $employeeCheck ]
 then 
-	empRatePerHr=20
 	empHrs=8
 	salary=$(($empHrs*$empRatePerHr))
 else
@@ -27,26 +29,21 @@ else
 fi
 
 #To add part time employee and Wage 
-if [ $isFullTime -eq $randomCheck ]
-then 
-	empHrs=8
-elif [ $isPartTime -eq $randomCheck ]
-then
-	empHrs=4
-else
-	empHrs=0
-fi
-
-salary=$(($empHrs*$empRatePerHr))
 
 #To add part time employee and calculate it's wage using case statement
-case $randomCheck in
-	$isFullTime)
-		empHrs=8 ;;
-	$isPartTime)
-		empHrs=4 ;;
-	*)
-		empHrs=0 ;;
-esac
 
-salary=$(($empHrs*$empRatePerHr))
+#To calculate the wage for month
+for (( day=1; day<=$numWorkingDays; day++ ))
+do
+	employeeCheck=$((RANDOM%3))
+		case $employeeCheck in
+			$isFullTime)
+				empHrs=8 ;;
+			$isPartTime)
+				empHrs=4 ;;
+			*)
+				empHrs=0 ;;
+		esac
+		salary=$(($empHrs*$empRatePerHr))
+		totalSalary=$(($totalSalary+$salary))
+done
