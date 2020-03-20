@@ -38,3 +38,15 @@ else
 fi
 
 salary=$(($empHrs*$empRatePerHr))
+
+#To add part time employee and calculate it's wage using case statement
+case $randomCheck in
+	$isFullTime)
+		empHrs=8 ;;
+	$isPartTime)
+		empHrs=4 ;;
+	*)
+		empHrs=0 ;;
+esac
+
+salary=$(($empHrs*$empRatePerHr))
