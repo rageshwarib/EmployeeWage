@@ -9,6 +9,7 @@ IS_FULL_TIME=2
 EMP_RATE_PER_HR=20
 MAX_WORKING_DAYS=20
 MAX_WORKING_HRS=100
+
 #Variables
 totolSalary=0
 totalEmpHrs=0
@@ -43,16 +44,16 @@ fi
 for (( day=1; day<=$MAX_WORKING_DAYS; day++ ))
 do
 	employeeCheck=$((RANDOM%3))
-		case $employeeCheck in
-			$IS_FULL_TIME)
-				empHrs=8 ;;
-			$IS_PART_TIME)
-				empHrs=4 ;;
-			*)
-				empHrs=0 ;;
-		esac
-		salary=$(($empHrs*$EMP_RATE_PER_HR))
-		totalSalary=$(($totalSalary+$salary))
+	case $employeeCheck in
+		$IS_FULL_TIME)
+			empHrs=8 ;;
+		$IS_PART_TIME)
+			empHrs=4 ;;
+		*)
+			empHrs=0 ;;
+	esac
+	salary=$(($empHrs*$EMP_RATE_PER_HR))
+	totalSalary=$(($totalSalary+$salary))
 done
 
 #Calculate wages till a condition of total working hours or days is reached
