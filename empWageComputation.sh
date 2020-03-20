@@ -8,11 +8,13 @@ IS_PART_TIME=1
 IS_FULL_TIME=2
 EMP_RATE_PER_HR=20
 MAX_WORKING_DAYS=20
+MAX_WORKING_HRS=100
 #Variables
 totolSalary=0
 totalEmpHrs=0
 totalWorkingDays=0
 salary=0
+workHours=0
 
 employeeCheck=$((RANDOM%3))
 
@@ -53,23 +55,27 @@ do
 		totalSalary=$(($totalSalary+$salary))
 done
 
-#Calculate wages till a condition of total working hours or days is reached for a month
-# VARIABLES
+#Calculate wages till a condition of total working hours or days is reached
 
-while [[ $totalEmpHrs -lt $MAX_WORKING_DAYS && $totalWorkingDays -lt $MAX_WORKING_DAYS ]]
+#Function to get work hours
+function getWorkingHours() {
+	case $1 in
+		$IS_FULL_TIME)
+			workHours=8 ;;
+		$IS_PART_TIME)
+			workHours=4 ;;
+		*)
+			workHours=0 ;;
+	esac
+	echo $workHours
+}
+
+#Calculate wages till a condition of total working hours or days is reached for a month
+while [[ $totalWorkingDays -lt $MAX_WORKING_DAYS && $totalEmpHrs -lt $MAX_WORKING_HRS ]]
 do
 	((totalWorkingDays++))
-	employeeCheck=$((RANDOM%3))
-	case $employeeCheck in
-		$IS_FULL_TIME)
-			empHrs=8 ;;
-		$IS_PART_TIME)
-			empHrs=4 ;;
-		*)
-			empHrs=0 ;;
-	esac
+	empHrs="$( getWorkingHours $((RANDOM%3)))"
 	totalEmpHrs=$(($totalEmpHrs+$empHrs))
 done
 
 totalSalary=$(($totalEmpHrs*$EMP_RATE_PER_HR))
-
